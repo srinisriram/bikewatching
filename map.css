@@ -1,0 +1,98 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#map {
+  width: 100%;
+  flex: 1; /* fill the space left after the header and legend */
+  min-height: 30em;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+/* Shared flow colors for the circles and the legend (Step 6) */
+#map circle,
+.legend > div {
+  --color-departures: steelblue;
+  --color-arrivals: darkorange;
+  --color: color-mix(
+    in oklch,
+    var(--color-departures) calc(100% * var(--departure-ratio)),
+    var(--color-arrivals)
+  );
+}
+
+#map svg {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+
+  circle {
+    fill: var(--color);
+    fill-opacity: 60%;
+    stroke: white;
+    pointer-events: auto;
+  }
+}
+
+header {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  align-self: stretch;
+}
+
+header label {
+  margin-left: auto;
+}
+
+header time,
+header em {
+  display: block;
+}
+
+header em {
+  color: color-mix(in oklch, currentColor, transparent 40%);
+  font-style: italic;
+}
+
+p {
+  align-self: stretch;
+}
+
+/* Legend: separate swatches and labels (Design 2) */
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 1.5em;
+  margin-block: 1em;
+  align-self: stretch;
+  font-size: 0.9em;
+
+  .legend-title {
+    color: color-mix(in oklch, currentColor, transparent 40%);
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+
+  > div::before {
+    content: '';
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: var(--color);
+    opacity: 0.8;
+  }
+}
